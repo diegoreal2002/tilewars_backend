@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tiles",
+  "info": {
+    "singularName": "tile",
+    "pluralName": "tiles",
+    "displayName": "tile"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tile_xposit": {
+      "type": "integer",
+      "required": true
+    },
+    "tile_yposit": {
+      "type": "integer",
+      "required": true
+    },
+    "tile_idusua": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::usua.usua"
+    },
+    "tile_value": {
+      "type": "integer",
+      "required": true
+    },
+    "tile_isvip": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "tile_image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "tile_messag": {
+      "type": "string"
+    },
+    "tile_uattac": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    }
+  }
+}

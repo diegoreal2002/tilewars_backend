@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "usuas",
+  "info": {
+    "singularName": "usua",
+    "pluralName": "usuas",
+    "displayName": "usua"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "usua_userna": {
+      "type": "string",
+      "required": true
+    },
+    "usua_email": {
+      "type": "email",
+      "required": true
+    },
+    "usua_passwo": {
+      "type": "password"
+    },
+    "usua_idgoog": {
+      "type": "string"
+    },
+    "usua_nocoin": {
+      "type": "decimal",
+      "required": true
+    },
+    "usua_verifi": {
+      "type": "boolean"
+    },
+    "usua_create": {
+      "type": "date",
+      "required": true
+    },
+    "usua_avatar": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}
