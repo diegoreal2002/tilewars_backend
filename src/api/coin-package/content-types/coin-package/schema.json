@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "coin_packages",
+  "info": {
+    "singularName": "coin-package",
+    "pluralName": "coin-packages",
+    "displayName": "Coin Package",
+    "description": "Paquetes de Coins configurables desde admin"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "coins": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "usd_price": {
+      "type": "decimal",
+      "required": true
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

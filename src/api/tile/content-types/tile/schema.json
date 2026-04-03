@@ -4,7 +4,8 @@
   "info": {
     "singularName": "tile",
     "pluralName": "tiles",
-    "displayName": "tile"
+    "displayName": "Tile",
+    "description": "Mapa y estado de cada casilla"
   },
   "options": {
     "draftAndPublish": true
@@ -19,14 +20,16 @@
       "type": "integer",
       "required": true
     },
-    "tile_idusua": {
+    "tile_owner": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::usua.usua"
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
     },
-    "tile_value": {
+    "tile_real_price": {
       "type": "integer",
-      "required": true
+      "required": true,
+      "default": 10,
+      "min": 1
     },
     "tile_isvip": {
       "type": "boolean",
@@ -44,12 +47,64 @@
       ]
     },
     "tile_messag": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 140
     },
     "tile_uattac": {
       "type": "boolean",
       "required": true,
       "default": false
+    },
+    "tile_attack_ends_at": {
+      "type": "datetime"
+    },
+    "tile_attack_started_at": {
+      "type": "datetime"
+    },
+    "tile_attack_max_bid": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "tile_attack_max_bidder": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "tile_defense_max_bid": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "tile_streak_start_at": {
+      "type": "datetime"
+    },
+    "tile_shield_ends_at": {
+      "type": "datetime"
+    },
+    "tile_prepared_defense_active": {
+      "type": "boolean",
+      "default": false
+    },
+    "tile_prepared_defense_type": {
+      "type": "enumeration",
+      "enum": [
+        "instant",
+        "m10",
+        "h1",
+        "h12"
+      ]
+    },
+    "tile_prepared_defense_cushion": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "tile_prepared_defense_trigger_at": {
+      "type": "datetime"
+    },
+    "tile_links": {
+      "type": "json"
     }
   }
 }

@@ -1,0 +1,77 @@
+{
+  "kind": "singleType",
+  "collectionName": "game_settings",
+  "info": {
+    "singularName": "game-setting",
+    "pluralName": "game-settings",
+    "displayName": "Game Settings",
+    "description": "Reglas globales del juego editables sin codigo"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "map_width": {
+      "type": "integer",
+      "default": 10,
+      "min": 1
+    },
+    "map_height": {
+      "type": "integer",
+      "default": 10,
+      "min": 1
+    },
+    "base_tile_price": {
+      "type": "integer",
+      "default": 10,
+      "min": 1
+    },
+    "vip_multiplier": {
+      "type": "decimal",
+      "default": 2
+    },
+    "attack_window_hours": {
+      "type": "integer",
+      "default": 24,
+      "min": 1
+    },
+    "maintenance_percent": {
+      "type": "decimal",
+      "default": 0.1
+    },
+    "maintenance_days_interval": {
+      "type": "integer",
+      "default": 15,
+      "min": 1
+    },
+    "last_maintenance_run_at": {
+      "type": "datetime"
+    },
+    "shield_cost_per_hour": {
+      "type": "integer",
+      "default": 5,
+      "min": 1
+    },
+    "prepared_defense_instant_pct": {
+      "type": "decimal",
+      "default": 0.5
+    },
+    "prepared_defense_10m_pct": {
+      "type": "decimal",
+      "default": 0.2
+    },
+    "prepared_defense_1h_pct": {
+      "type": "decimal",
+      "default": 0.02
+    },
+    "prepared_defense_12h_pct": {
+      "type": "decimal",
+      "default": 0
+    },
+    "is_attack_blink_enabled": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

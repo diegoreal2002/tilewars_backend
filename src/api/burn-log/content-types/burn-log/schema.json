@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "burn_logs",
+  "info": {
+    "singularName": "burn-log",
+    "pluralName": "burn-logs",
+    "displayName": "Burn Log",
+    "description": "Registro de quema de Coins para auditoria economica"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "amount": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "reason": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "metadata": {
+      "type": "json"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "profile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::usua.usua"
+    },
+    "tile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tile.tile"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "kind": "collectionType",
+  "collectionName": "coin_ledgers",
+  "info": {
+    "singularName": "coin-ledger",
+    "pluralName": "coin-ledgers",
+    "displayName": "Coin Ledger",
+    "description": "Registro auditable de movimientos de Coins"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "entry_type": {
+      "type": "enumeration",
+      "enum": [
+        "tile_buy",
+        "attack_bid",
+        "defense_bid",
+        "prepared_defense_setup",
+        "shield_buy",
+        "refund",
+        "burn",
+        "maintenance",
+        "paypal_credit",
+        "admin_adjustment"
+      ],
+      "required": true
+    },
+    "amount": {
+      "type": "integer",
+      "required": true
+    },
+    "balance_after": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "reason": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "metadata": {
+      "type": "json"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "profile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::usua.usua"
+    },
+    "tile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tile.tile"
+    }
+  }
+}

@@ -430,10 +430,301 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAttackBidAttackBid extends Struct.CollectionTypeSchema {
+  collectionName: 'attack_bids';
+  info: {
+    description: 'Historial de pujas de ataque por casilla';
+    displayName: 'Attack Bid';
+    pluralName: 'attack-bids';
+    singularName: 'attack-bid';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    amount: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::attack-bid.attack-bid'
+    > &
+      Schema.Attribute.Private;
+    placed_at: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    profile: Schema.Attribute.Relation<'manyToOne', 'api::usua.usua'>;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<
+      ['active_max', 'overbid', 'resolved_win', 'resolved_loss']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'active_max'>;
+    tile: Schema.Attribute.Relation<'manyToOne', 'api::tile.tile'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiBurnLogBurnLog extends Struct.CollectionTypeSchema {
+  collectionName: 'burn_logs';
+  info: {
+    description: 'Registro de quema de Coins para auditoria economica';
+    displayName: 'Burn Log';
+    pluralName: 'burn-logs';
+    singularName: 'burn-log';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    amount: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::burn-log.burn-log'
+    > &
+      Schema.Attribute.Private;
+    metadata: Schema.Attribute.JSON;
+    profile: Schema.Attribute.Relation<'manyToOne', 'api::usua.usua'>;
+    publishedAt: Schema.Attribute.DateTime;
+    reason: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    tile: Schema.Attribute.Relation<'manyToOne', 'api::tile.tile'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiCoinLedgerCoinLedger extends Struct.CollectionTypeSchema {
+  collectionName: 'coin_ledgers';
+  info: {
+    description: 'Registro auditable de movimientos de Coins';
+    displayName: 'Coin Ledger';
+    pluralName: 'coin-ledgers';
+    singularName: 'coin-ledger';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    amount: Schema.Attribute.Integer & Schema.Attribute.Required;
+    balance_after: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    entry_type: Schema.Attribute.Enumeration<
+      [
+        'tile_buy',
+        'attack_bid',
+        'defense_bid',
+        'prepared_defense_setup',
+        'shield_buy',
+        'refund',
+        'burn',
+        'maintenance',
+        'paypal_credit',
+        'admin_adjustment',
+      ]
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::coin-ledger.coin-ledger'
+    > &
+      Schema.Attribute.Private;
+    metadata: Schema.Attribute.JSON;
+    profile: Schema.Attribute.Relation<'manyToOne', 'api::usua.usua'>;
+    publishedAt: Schema.Attribute.DateTime;
+    reason: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    tile: Schema.Attribute.Relation<'manyToOne', 'api::tile.tile'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiCoinPackageCoinPackage extends Struct.CollectionTypeSchema {
+  collectionName: 'coin_packages';
+  info: {
+    description: 'Paquetes de Coins configurables desde admin';
+    displayName: 'Coin Package';
+    pluralName: 'coin-packages';
+    singularName: 'coin-package';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    coins: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    is_featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::coin-package.coin-package'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    sort_order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    usd_price: Schema.Attribute.Decimal & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiGameSettingGameSetting extends Struct.SingleTypeSchema {
+  collectionName: 'game_settings';
+  info: {
+    description: 'Reglas globales del juego editables sin codigo';
+    displayName: 'Game Settings';
+    pluralName: 'game-settings';
+    singularName: 'game-setting';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    attack_window_hours: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<24>;
+    base_tile_price: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<10>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    is_attack_blink_enabled: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    last_maintenance_run_at: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-setting.game-setting'
+    > &
+      Schema.Attribute.Private;
+    maintenance_days_interval: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<15>;
+    maintenance_percent: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0.1>;
+    map_height: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<10>;
+    map_width: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<10>;
+    prepared_defense_10m_pct: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0.2>;
+    prepared_defense_12h_pct: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0>;
+    prepared_defense_1h_pct: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0.02>;
+    prepared_defense_instant_pct: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0.5>;
+    publishedAt: Schema.Attribute.DateTime;
+    shield_cost_per_hour: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    vip_multiplier: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<2>;
+  };
+}
+
 export interface ApiTileTile extends Struct.CollectionTypeSchema {
   collectionName: 'tiles';
   info: {
-    displayName: 'tile';
+    description: 'Mapa y estado de cada casilla';
+    displayName: 'Tile';
     pluralName: 'tiles';
     singularName: 'tile';
   };
@@ -448,18 +739,71 @@ export interface ApiTileTile extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::tile.tile'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    tile_idusua: Schema.Attribute.Relation<'oneToOne', 'api::usua.usua'>;
+    tile_attack_ends_at: Schema.Attribute.DateTime;
+    tile_attack_max_bid: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    tile_attack_max_bidder: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    tile_attack_started_at: Schema.Attribute.DateTime;
+    tile_defense_max_bid: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
     tile_image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
     tile_isvip: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
-    tile_messag: Schema.Attribute.String;
+    tile_links: Schema.Attribute.JSON;
+    tile_messag: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 140;
+      }>;
+    tile_owner: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    tile_prepared_defense_active: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    tile_prepared_defense_cushion: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    tile_prepared_defense_trigger_at: Schema.Attribute.DateTime;
+    tile_prepared_defense_type: Schema.Attribute.Enumeration<
+      ['instant', 'm10', 'h1', 'h12']
+    >;
+    tile_real_price: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<10>;
+    tile_shield_ends_at: Schema.Attribute.DateTime;
+    tile_streak_start_at: Schema.Attribute.DateTime;
     tile_uattac: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
-    tile_value: Schema.Attribute.Integer & Schema.Attribute.Required;
     tile_xposit: Schema.Attribute.Integer & Schema.Attribute.Required;
     tile_yposit: Schema.Attribute.Integer & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -471,7 +815,8 @@ export interface ApiTileTile extends Struct.CollectionTypeSchema {
 export interface ApiUsuaUsua extends Struct.CollectionTypeSchema {
   collectionName: 'usuas';
   info: {
-    displayName: 'usua';
+    description: 'Perfil de juego editable desde Strapi';
+    displayName: 'Player Profile';
     pluralName: 'usuas';
     singularName: 'usua';
   };
@@ -489,14 +834,26 @@ export interface ApiUsuaUsua extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     usua_avatar: Schema.Attribute.Media<'images'>;
     usua_create: Schema.Attribute.Date & Schema.Attribute.Required;
     usua_email: Schema.Attribute.Email & Schema.Attribute.Required;
     usua_idgoog: Schema.Attribute.String;
-    usua_nocoin: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    usua_nocoin: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
     usua_passwo: Schema.Attribute.Password;
     usua_userna: Schema.Attribute.String & Schema.Attribute.Required;
-    usua_verifi: Schema.Attribute.Boolean;
+    usua_verifi: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
   };
 }
 
@@ -1011,6 +1368,11 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::attack-bid.attack-bid': ApiAttackBidAttackBid;
+      'api::burn-log.burn-log': ApiBurnLogBurnLog;
+      'api::coin-ledger.coin-ledger': ApiCoinLedgerCoinLedger;
+      'api::coin-package.coin-package': ApiCoinPackageCoinPackage;
+      'api::game-setting.game-setting': ApiGameSettingGameSetting;
       'api::tile.tile': ApiTileTile;
       'api::usua.usua': ApiUsuaUsua;
       'plugin::content-releases.release': PluginContentReleasesRelease;

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "usua",
     "pluralName": "usuas",
-    "displayName": "usua"
+    "displayName": "Player Profile",
+    "description": "Perfil de juego editable desde Strapi"
   },
   "options": {
     "draftAndPublish": true
@@ -26,11 +27,14 @@
       "type": "string"
     },
     "usua_nocoin": {
-      "type": "decimal",
-      "required": true
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "min": 0
     },
     "usua_verifi": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "usua_create": {
       "type": "date",
@@ -42,6 +46,11 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }

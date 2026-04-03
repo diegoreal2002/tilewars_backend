@@ -4,4 +4,4 @@
 
 import { factories } from '@strapi/strapi';
 
-export default factories.createCoreRouter('api::tile.tile');
+export default factories.createCoreRouter('api::tile.tile' as any);

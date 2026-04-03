@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "attack_bids",
+  "info": {
+    "singularName": "attack-bid",
+    "pluralName": "attack-bids",
+    "displayName": "Attack Bid",
+    "description": "Historial de pujas de ataque por casilla"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "amount": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "active_max",
+        "overbid",
+        "resolved_win",
+        "resolved_loss"
+      ],
+      "required": true,
+      "default": "active_max"
+    },
+    "placed_at": {
+      "type": "datetime",
+      "required": true
+    },
+    "tile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tile.tile"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "profile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::usua.usua"
+    }
+  }
+}
