@@ -430,10 +430,41 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBidBid extends Struct.CollectionTypeSchema {
+  collectionName: 'bids';
+  info: {
+    displayName: 'Bid';
+    pluralName: 'bids';
+    singularName: 'bid';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bid_amount: Schema.Attribute.Integer & Schema.Attribute.Required;
+    bid_iduser: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    bid_timest: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::bid.bid'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    tile: Schema.Attribute.Relation<'oneToOne', 'api::tile.tile'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiTileTile extends Struct.CollectionTypeSchema {
   collectionName: 'tiles';
   info: {
-    displayName: 'tile';
+    displayName: 'Tile';
     pluralName: 'tiles';
     singularName: 'tile';
   };
@@ -448,7 +479,10 @@ export interface ApiTileTile extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::tile.tile'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    tile_idusua: Schema.Attribute.Relation<'oneToOne', 'api::usua.usua'>;
+    tile_iduser: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     tile_image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
@@ -465,38 +499,6 @@ export interface ApiTileTile extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-  };
-}
-
-export interface ApiUsuaUsua extends Struct.CollectionTypeSchema {
-  collectionName: 'usuas';
-  info: {
-    displayName: 'usua';
-    pluralName: 'usuas';
-    singularName: 'usua';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::usua.usua'> &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    usua_avatar: Schema.Attribute.Media<'images'>;
-    usua_create: Schema.Attribute.Date & Schema.Attribute.Required;
-    usua_email: Schema.Attribute.Email & Schema.Attribute.Required;
-    usua_idgoog: Schema.Attribute.String;
-    usua_nocoin: Schema.Attribute.Decimal & Schema.Attribute.Required;
-    usua_passwo: Schema.Attribute.Password;
-    usua_userna: Schema.Attribute.String & Schema.Attribute.Required;
-    usua_verifi: Schema.Attribute.Boolean;
   };
 }
 
@@ -956,10 +958,12 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    coins: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<0>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
@@ -1011,8 +1015,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::bid.bid': ApiBidBid;
       'api::tile.tile': ApiTileTile;
-      'api::usua.usua': ApiUsuaUsua;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

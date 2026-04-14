@@ -4,7 +4,7 @@
   "info": {
     "singularName": "tile",
     "pluralName": "tiles",
-    "displayName": "tile"
+    "displayName": "Tile"
   },
   "options": {
     "draftAndPublish": true
@@ -18,11 +18,6 @@
     "tile_yposit": {
       "type": "integer",
       "required": true
-    },
-    "tile_idusua": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::usua.usua"
     },
     "tile_value": {
       "type": "integer",
@@ -50,6 +45,11 @@
       "type": "boolean",
       "required": true,
       "default": false
+    },
+    "tile_iduser": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }
