@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tiles",
+  "info": {
+    "singularName": "tile",
+    "pluralName": "tiles",
+    "displayName": "Tile"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tile_value": {
+      "type": "integer"
+    },
+    "tile_xposit": {
+      "type": "integer"
+    },
+    "tile_yposit": {
+      "type": "integer"
+    },
+    "tile_iduser": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "tile_undatt": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

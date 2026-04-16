@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bids",
+  "info": {
+    "singularName": "bid",
+    "pluralName": "bids",
+    "displayName": "Bid"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "bid_idtile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::tile.tile"
+    },
+    "bid_iduser": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "bid_value": {
+      "type": "integer"
+    },
+    "bid_date": {
+      "type": "datetime"
+    }
+  }
+}
